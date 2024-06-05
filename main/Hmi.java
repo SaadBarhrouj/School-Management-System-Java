@@ -2,6 +2,9 @@ package main;
 
 import models.School;
 import models.Student;
+import models.Teacher;
+import models.Person;
+
 import services.SchoolServices;
 
 import java.util.Scanner;
@@ -17,12 +20,21 @@ public class Hmi {
         do{
             System.out.println("what do you want to do?");
             action=sc.next();
-            if(action.equals("addStudent")){Hmi.addStudent();
-            }
-            if (action.equals("printAllStudents")) {
-                for(Student student:school.getStudents()){
-                    System.out.println(student.getName() + " " + student.getAge() + " " );
-                }
+            switch (action){
+                case "addStudent":
+                    Hmi.addStudent();
+                      break;
+                      case "printAllStudents":
+                          Hmi.printAllStudents();
+                          break;
+                case "addTeacher":
+                    Hmi.addTeacher();
+                    break;
+                    case "printAllTeachers":
+                        Hmi.printAllTeachers();
+                        break;
+
+
             }
 
 
@@ -49,5 +61,52 @@ public class Hmi {
         Hmi.schoolServices.addStudent(student);
 
     }
+    private static void addTeacher(){
+        Scanner reader=new Scanner(System.in);
+        Teacher teacher=new Teacher();
+        System.out.println("plz enter the name of the teacher");
+       teacher.setName(reader.next());
+        System.out.println("plz enter the age of the teacher");
+        teacher.setAge(reader.nextInt());
+        System.out.println("plz enter the salary of the teacher ");
+        teacher.setSalary(reader.nextFloat());
+        Hmi.schoolServices.addTeacher(teacher);
 
     }
+    public static void printAllStudents(){
+        for(Student student:schoolServices.getMySchool().getStudents()){
+            System.out.println(student.getName() + " " + student.getAge() + " " );
+        }
+    }
+
+        public static void printAllTeachers(){
+            for(Teacher teacher:schoolServices.getMySchool().getTeachers()){
+                System.out.println(teacher.getName() + " " + teacher.getAge() + " " );
+            }
+        }
+ private static void setDataPerson (Person p){
+     Scanner reader=new Scanner(System.in);
+     System.out.println("plz enter the name ");
+    p.setName(reader.next());
+     System.out.println("plz enter the age ");
+     p.setAge(reader.nextInt());
+
+     if(p instanceof Teacher){
+         System.out.println("plz enter the salary ");
+         ((Teacher )p).setSalary(reader.nextFloat());
+     }else if(p instanceof Student){
+         System.out.println("plz enter the phone number ");
+         ( (Student) p).setParentPhoneNumber(reader.next());
+
+     }
+
+     }
+
+     }
+
+
+
+
+
+
+

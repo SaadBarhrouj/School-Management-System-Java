@@ -24,10 +24,10 @@ public class SchoolServices {
 
         this.mySchool.getStudents().add(student);
 }
-    public void addStudent (Teacher teacher) {
+    public void addTeacher (Teacher teacher) {
         this.mySchool.getTeachers().add(teacher);
     }
-    public void addGade (Grade grade) {
+    public void addGrade (Grade grade) {
         this.mySchool.getGrades().add(grade);
 
     }

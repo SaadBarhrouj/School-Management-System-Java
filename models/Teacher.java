@@ -11,7 +11,7 @@ public Teacher (String name ,int age,float salary){
 public Teacher() {
 
 }
-public void SetSalary(float salary) {
+public void setSalary (float salary) {
     this.salary = salary;
 }
 public float getSalary() {
