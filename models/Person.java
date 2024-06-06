@@ -1,6 +1,6 @@
 package models;
 
-public class Person {
+public abstract class Person {
     String name;
     int age;
     public Person(String name ,int age) {
@@ -22,4 +22,5 @@ public class Person {
     public void setAge(int age) {
         this.age = age;
     }
+    public abstract String getData();
 }

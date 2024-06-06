@@ -17,4 +17,9 @@ public void setSalary (float salary) {
 public float getSalary() {
     return salary;
 }
+
+@Override
+    public  String getData(){
+    return this.getName()+" "+this.getAge()+" "+this.getSalary();
+}
 }

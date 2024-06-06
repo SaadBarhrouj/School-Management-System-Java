@@ -45,7 +45,7 @@ public class SchoolServices {
     public Student getStudentByName (String name) {
         Student a =null;
         for (Student student : this.mySchool.getStudents()) {
-            if (student.getName().equals(name)) {
+            if (student.getName().toUpperCase().equals(name.toUpperCase())) {
                 a = student;
             }
 
@@ -55,7 +55,7 @@ public class SchoolServices {
     }
     public Teacher getTeacherByName (String name) {
         for (Teacher teacher:this.mySchool.getTeachers()) {
-            if (teacher.getName().equals(name)) {
+            if (teacher.getName().toUpperCase().equals(name.toUpperCase())) {
                 return teacher;
             }
         }

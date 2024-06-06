@@ -4,6 +4,8 @@ import models.School;
 import models.Student;
 import models.Teacher;
 import models.Person;
+import tools.actions;
+
 
 import services.SchoolServices;
 
@@ -33,11 +35,19 @@ public class Hmi {
                     case "printAllTeachers":
                         Hmi.printAllTeachers();
                         break;
-
-
+                case "findStudentByName":
+                    Hmi.printDataPersonByName(actions.STUDENT);
+                    break;
+                case " findTeacherByName":
+                    Hmi.printDataPersonByName(actions.TEACHER);
+                    break;
+                case "removeTeacherByName":
+                    Hmi.removePerson(actions.TEACHER);
+                    break;
+                case "removeStudentByName":
+                    Hmi.removePerson(actions.STUDENT);
+                    break;
             }
-
-
         }while (!action.equals("exit"));
     }
 
@@ -52,36 +62,26 @@ public class Hmi {
     private static void addStudent (){
         Scanner reader=new Scanner(System.in);
         Student student=new Student();
-        System.out.println("plz enter the name of the student");
-        student.setName(reader.next());
-        System.out.println("plz enter the age of the student");
-        student.setAge(reader.nextInt());
-        System.out.println("plz enter the phone number ");
-        student.setParentPhoneNumber(reader.next());
+       Hmi.setDataPerson(student);
         Hmi.schoolServices.addStudent(student);
 
     }
     private static void addTeacher(){
         Scanner reader=new Scanner(System.in);
         Teacher teacher=new Teacher();
-        System.out.println("plz enter the name of the teacher");
-       teacher.setName(reader.next());
-        System.out.println("plz enter the age of the teacher");
-        teacher.setAge(reader.nextInt());
-        System.out.println("plz enter the salary of the teacher ");
-        teacher.setSalary(reader.nextFloat());
+       Hmi.setDataPerson(teacher);
         Hmi.schoolServices.addTeacher(teacher);
 
     }
     public static void printAllStudents(){
         for(Student student:schoolServices.getMySchool().getStudents()){
-            System.out.println(student.getName() + " " + student.getAge() + " " );
+            System.out.println(student.getData() );
         }
     }
 
         public static void printAllTeachers(){
             for(Teacher teacher:schoolServices.getMySchool().getTeachers()){
-                System.out.println(teacher.getName() + " " + teacher.getAge() + " " );
+                System.out.println(teacher.getData() );
             }
         }
  private static void setDataPerson (Person p){
@@ -90,19 +90,63 @@ public class Hmi {
     p.setName(reader.next());
      System.out.println("plz enter the age ");
      p.setAge(reader.nextInt());
-
      if(p instanceof Teacher){
          System.out.println("plz enter the salary ");
          ((Teacher )p).setSalary(reader.nextFloat());
-     }else if(p instanceof Student){
+     }
+     else if(p instanceof Student){
          System.out.println("plz enter the phone number ");
          ( (Student) p).setParentPhoneNumber(reader.next());
 
      }
 
      }
+     private static void printDataPerson(Person person ){
+         if(person==null) {
+             System.out.println("not found !!!!");
+         }else {
+             System.out.println(person.getData());
+         }
+     }
+
+
+    private static Person findPersonByName(actions action){
+        Scanner reader=new Scanner(System.in);
+        System.out.println("plz enter the name ");
+        String name = reader.next();
+        Person p;
+        if (action==actions.STUDENT){
+            p =Hmi.schoolServices.getStudentByName(name);
+        }else {
+            p =Hmi.schoolServices.getTeacherByName(name);
+        }
+        return p;
+
+    }
+    private static void printDataPersonByName(actions action){
+        Person p=findPersonByName(action);
+        printDataPerson(p);
+    }
+
+    private static void removePerson (actions  action){
+        Person p=Hmi.findPersonByName(action);
+        if (p instanceof Student){
+            Hmi.schoolServices.removeStudent((Student)p);
+
+        }else{
+            Hmi.schoolServices.removeTeacher((Teacher)p);
+
+        }
+    }
+
+
+
+
+
 
      }
+
+
 
 
 
